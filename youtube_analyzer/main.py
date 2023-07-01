@@ -1,10 +1,9 @@
 import json
-import os
 from pathlib import Path
 
-from dotenv import load_dotenv
-
+from youtube_analyzer.settings import settings
 from youtube_analyzer.utils.logger import logger
+from youtube_analyzer.utils.send_mail import send_mail
 from youtube_analyzer.utils.yapi import YApi
 
 
@@ -16,19 +15,22 @@ def get_channel_id_list() -> list[str]:
     return list(channel_ids.values())
 
 
-def get_api_key() -> str:
-    load_dotenv(Path(__file__).resolve().parent / "credentials.env")
-    api_key: str = os.environ.get("api_key")
-    return api_key
-
-
 def main():
     try:
         logger.info("Start youtube_analyzer")
-        api_key = get_api_key()
         channel_id = get_channel_id_list()
-        yapi = YApi(api_key=api_key, channel_ids=channel_id)
+        yapi = YApi(api_key=settings.api_key, channel_ids=channel_id)
         yapi.perform_request()
         logger.info("Finish")
     except Exception as exception:
         logger.warning(exception)
+    finally:
+        if logger.problem_occurred:
+            send_mail(
+                icloud_id=settings.icloud_id,
+                icloud_pass=settings.icloud_pass,
+                to_address=settings.to_address,
+                subject=settings.subject,
+                message=settings.message,
+                files=[logger.save_path],
+            )
