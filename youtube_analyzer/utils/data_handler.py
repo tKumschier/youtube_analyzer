@@ -5,8 +5,8 @@ from typing import Any
 
 from pydantic import BaseModel
 
+from miscellaneous.logger import logger
 from youtube_analyzer.schema.data import Data
-from youtube_analyzer.utils.logger import logger
 
 
 class DataHandler(BaseModel):

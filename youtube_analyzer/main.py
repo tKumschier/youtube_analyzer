@@ -1,9 +1,9 @@
 import json
 from pathlib import Path
 
+from miscellaneous.logger import logger
+from miscellaneous.send_mail import send_mail
 from youtube_analyzer.settings import settings
-from youtube_analyzer.utils.logger import logger
-from youtube_analyzer.utils.send_mail import send_mail
 from youtube_analyzer.utils.yapi import YApi
 
 

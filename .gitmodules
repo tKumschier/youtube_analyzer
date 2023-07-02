@@ -1,0 +1,3 @@
+[submodule "miscellaneous"]
+	path = miscellaneous
+	url = ../miscellaneous

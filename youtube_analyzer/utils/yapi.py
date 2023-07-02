@@ -6,12 +6,12 @@ from typing import Any, Dict, List
 from googleapiclient.discovery import Resource, build
 from googleapiclient.http import HttpRequest
 
+from miscellaneous.logger import logger
 from youtube_analyzer.schema.channels import Channels, ChannelsItem
 from youtube_analyzer.schema.data import Data
 from youtube_analyzer.schema.playlist_items import PlaylistItems, PlaylistItemsItem
 from youtube_analyzer.schema.videos import Videos
 from youtube_analyzer.utils.data_handler import DataHandler
-from youtube_analyzer.utils.logger import logger
 
 
 def dict_to_file(response: Any, filename: str):
@@ -116,8 +116,8 @@ class YApi:
         # 4. Get featured-channels
         channels: Channels = self.perform_channel_stats()
         # dict_to_file(channels, "chanels")
-        for channel_id, channel_item in zip(self.channel_ids, channels.items):
-            logger.info(f"Parse channel {channel_id}")
+        for channel_item in channels.items:
+            logger.info(f"Parse channel {channel_item.id}")
             upload_playlist_id: str = self.get_upload_playlist_id(channel_item)
             playlist_items: PlaylistItems = self.get_videos_from_playlist(
                 upload_playlist_id
