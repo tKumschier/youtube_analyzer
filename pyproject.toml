@@ -11,6 +11,7 @@ google-api-python-client = "^2.66.0"
 python-dotenv = "^1.0.0"
 google-api-python-client-stubs = "^1.13.0"
 pydantic = "^1.10.2"
+tenacity = "^8.2.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.4"

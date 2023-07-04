@@ -5,6 +5,7 @@ from typing import Any, Dict, List
 
 from googleapiclient.discovery import Resource, build
 from googleapiclient.http import HttpRequest
+from tenacity import RetryCallState, retry, stop_after_attempt, wait_fixed
 
 from miscellaneous.logger import logger
 from youtube_analyzer.schema.channels import Channels, ChannelsItem
@@ -12,6 +13,16 @@ from youtube_analyzer.schema.data import Data
 from youtube_analyzer.schema.playlist_items import PlaylistItems, PlaylistItemsItem
 from youtube_analyzer.schema.videos import Videos
 from youtube_analyzer.utils.data_handler import DataHandler
+
+
+def retry_write_log_message(retry_state: RetryCallState):
+    if retry_state.attempt_number >= 1:
+        logger.info(
+            "Retrying %s: attempt %s ended with: %s",
+            retry_state.fn,
+            retry_state.attempt_number,
+            retry_state.outcome,
+        )
 
 
 def dict_to_file(response: Any, filename: str):
@@ -37,6 +48,12 @@ class YApi:
         video_ids: List[str] = [item.content_details.video_id for item in items_list]
         return video_ids
 
+    @retry(
+        stop=stop_after_attempt(7),
+        wait=wait_fixed(10),
+        reraise=True,
+        before_sleep=retry_write_log_message,
+    )
     def perform_channel_stats(self) -> Channels:
         # Get infos about the channel
         # statistics
@@ -60,6 +77,7 @@ class YApi:
         channels = Channels.parse_obj(response)
         return channels
 
+    # @retry(stop=stop_after_attempt(7), wait=wait_fixed(10), reraise=True, before_sleep=retry_write_log_message)
     # def perform_features_channels_list(self, channel_id: str) -> ChannelSections:
     #     # feature_channels
     #     request: HttpRequest = self.youtube.channelSections().list(
@@ -69,6 +87,12 @@ class YApi:
     #     channel_sections = ChannelSections.parse_obj(response)
     #     return channel_sections
 
+    @retry(
+        stop=stop_after_attempt(7),
+        wait=wait_fixed(10),
+        reraise=True,
+        before_sleep=retry_write_log_message,
+    )
     def get_videos_from_playlist(self, upload_playlist_id: str) -> PlaylistItems:
         # Chet uppload videos
         request: HttpRequest = self.youtube.playlistItems().list(
@@ -85,6 +109,12 @@ class YApi:
         playlist_items = PlaylistItems.parse_obj(response)
         return playlist_items
 
+    @retry(
+        stop=stop_after_attempt(7),
+        wait=wait_fixed(10),
+        reraise=True,
+        before_sleep=retry_write_log_message,
+    )
     def perform_video_info(self, video_id: str) -> Videos:
         request = self.youtube.videos().list(
             part=[
