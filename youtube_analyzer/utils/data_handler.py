@@ -7,19 +7,20 @@ from pydantic import BaseModel
 
 from miscellaneous.logger import logger
 from youtube_analyzer.schema.data import Data
+from youtube_analyzer.settings import settings
 
 
 class DataHandler(BaseModel):
-    root_path: Path
+    data_subpath: Path
 
     def __init__(self, **data: Any) -> None:
         folder_name: str = datetime.now().strftime("%Y.%m.%d_%H.00")
-        root_path: Path = Path(__file__).resolve().parents[2] / "data" / folder_name
-        root_path.mkdir(parents=True, exist_ok=True)
-        super().__init__(root_path=root_path, **data)
+        data_subpath: Path = settings.data_path / folder_name
+        data_subpath.mkdir(parents=True, exist_ok=True)
+        super().__init__(data_subpath=data_subpath, **data)
 
     def save_to_json(self, data: Data) -> None:
-        save_path: Path = self.root_path / f"{data.channel_item.id}.json"
+        save_path: Path = self.data_subpath / f"{data.channel_item.id}.json"
         with open(save_path, "w", encoding="UTF-8") as json_file:
             json.dump(data.dict(), json_file, indent=4)
         logger.info(f"Save to {save_path}")

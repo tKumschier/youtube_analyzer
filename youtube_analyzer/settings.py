@@ -14,9 +14,10 @@ class Settings(BaseSettings):
     to_address: str
     subject: str = "YoutubeAnalyzer - Problem to download metadata"
     message: str = "Problem to download medatada:"
+    data_path: Path = Path(__file__).resolve().parents[1] / "data"
 
     class Config:
-        env_file = Path(__file__).resolve().parent / "credentials.env"
+        env_file = Path(__file__).resolve().parent / "settings.env"
 
 
 settings = Settings()  # type: ignore
