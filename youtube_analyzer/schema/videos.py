@@ -89,7 +89,7 @@ class Statistics(BaseModel):
     view_count: str = Field(..., alias="viewCount")
     like_count: str = Field(..., alias="likeCount")
     favorite_count: str = Field(..., alias="favoriteCount")
-    comment_count: str = Field(..., alias="commentCount")
+    comment_count: str = Field("", alias="commentCount")
 
 
 class Player(BaseModel):
