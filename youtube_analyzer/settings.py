@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     data_path: Path = Path(__file__).resolve().parents[1] / "data"
 
     class Config:
-        env_file = Path(__file__).resolve().parent / "settings.env"
+        env_file = Path(__file__).resolve().parents[1] / "settings.env"
 
 
 settings = Settings()  # type: ignore
