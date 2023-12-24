@@ -1,4 +1,3 @@
-#
 from pathlib import Path
 
 from pydantic import BaseSettings
@@ -15,6 +14,7 @@ class Settings(BaseSettings):
     subject: str = "YoutubeAnalyzer - Problem to download metadata"
     message: str = "Problem to download medatada:"
     data_path: Path = Path(__file__).resolve().parents[1] / "data"
+    log_level: str = "INFO"
 
     class Config:
         env_file = Path(__file__).resolve().parents[1] / "settings.env"
