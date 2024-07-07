@@ -17,7 +17,7 @@ def get_channel_id_list() -> list[str]:
 
 def main():
     try:
-        logger.reset()
+        logger.replace_handlers()
         logger.info("Start youtube_analyzer")
         channel_id = get_channel_id_list()
         yapi = YApi(api_key=settings.api_key, channel_ids=channel_id)
@@ -33,5 +33,5 @@ def main():
                 to_address=settings.to_address,
                 subject=settings.subject,
                 message=settings.message,
-                files=[logger._save_path()],
+                files=[logger.save_path],
             )

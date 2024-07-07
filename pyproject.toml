@@ -6,7 +6,7 @@ authors = ["Angelicornis <dev.angelicornis@icloud.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-miscellaneous = { path = "./miscellaneous/"}
+miscellaneous = { path = "./miscellaneous/"} #, develop = true
 google-api-python-client = "^2.66.0"
 python-dotenv = "^1.0.0"
 google-api-python-client-stubs = "^1.13.0"

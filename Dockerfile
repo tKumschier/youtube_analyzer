@@ -18,6 +18,7 @@ RUN poetry install --without dev --no-root && rm -rf $POETRY_CACHE_DIR
 ##############################
 FROM python:3.10-slim-buster as runtime
 
+ENV PYTHONUNBUFFERED 1
 ENV VIRTUAL_ENV=/app/.venv \
     PATH="/app/.venv/bin:$PATH"
 
