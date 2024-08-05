@@ -1,0 +1,17 @@
+services:
+  youtube_analyzer:
+    image: localhost:10001/youtube_analyzer:latest
+    container_name: youtube_analyzer
+    volumes:
+      - ~/data/youtube_downloader/:/app/data/
+    env_file:
+      - settings.env
+    restart: unless-stopped
+    environment:
+      TZ: Europe/Berlin
+    ports:
+      - 8198:80
+      - 8199:443
+      - 587:587
+    dns:
+      - 9.9.9.9

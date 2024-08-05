@@ -141,7 +141,7 @@ class YApi:
 
     def perform_request(self) -> None:
         # 1: Get channel stats
-        # 2: Extrahiere upload-playlist ID von 1
+        # 2: Extrahiere upload-playlist ID from 1
         # 3: Get reduced video-metadata from 2
         # 4. Get featured-channels
         channels: Channels = self.perform_channel_stats()
