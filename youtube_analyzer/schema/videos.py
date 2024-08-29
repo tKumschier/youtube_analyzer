@@ -6,7 +6,9 @@ from __future__ import annotations
 
 from typing import Any, Dict, List
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
+
+from miscellaneous.logger import logger
 
 
 class Default(BaseModel):
@@ -139,3 +141,13 @@ class Videos(BaseModel):
     etag: str
     items: List[VideosItem]
     page_info: PageInfo = Field(..., alias="pageInfo")
+
+    @validator('*', pre=True)
+    def print_pre(cls, v):
+        logger.debug(f"pre_validator of pydantic_model '{cls.__name__}' with content", v)
+        return v
+
+    @validator('*', pre=False)
+    def print_post(cls, v):
+        logger.debug(f"post_validator of pydantic_model '{cls.__name__}' with content", v)
+        return v
