@@ -162,7 +162,7 @@ class YApi:
             for video_id in video_ids:
                 try:
                     video_list.append(self.perform_video_info(video_id))
-                except Exception as exception:
+                except Exception as exception:  # pylint: disable=broad-exception-caught
                     logger.warning(exception)
                     print(exception)
                     continue

@@ -1,5 +1,8 @@
+# pylint: disable=wrong-import-position
 import os
 import sys
+
+sys.path.append(os.path.dirname(__file__))
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 

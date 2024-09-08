@@ -69,7 +69,7 @@ class Snippet(BaseModel):
 
 
 class ContentDetails(BaseModel):
-    duration: str
+    duration: str | None
     dimension: str
     definition: str
     caption: str
@@ -142,12 +142,16 @@ class Videos(BaseModel):
     items: List[VideosItem]
     page_info: PageInfo = Field(..., alias="pageInfo")
 
-    @validator('*', pre=True)
-    def print_pre(cls, v):
-        logger.debug(f"pre_validator of pydantic_model '{cls.__name__}' with content", v)
-        return v
+    @validator("*", pre=True)
+    def print_pre(cls, value):
+        logger.debug(
+            f"pre_validator of pydantic_model '{cls.__name__}' with content", value
+        )
+        return value
 
-    @validator('*', pre=False)
-    def print_post(cls, v):
-        logger.debug(f"post_validator of pydantic_model '{cls.__name__}' with content", v)
-        return v
+    @validator("*", pre=False)
+    def print_post(cls, value):
+        logger.debug(
+            f"post_validator of pydantic_model '{cls.__name__}' with content", value
+        )
+        return value

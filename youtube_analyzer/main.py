@@ -23,7 +23,7 @@ def main():
         yapi = YApi(api_key=settings.api_key, channel_ids=channel_id)
         yapi.perform_request()
         logger.info("Finish")
-    except Exception as exception:
+    except Exception as exception:  # pylint: disable=broad-exception-caught
         logger.warning(exception)
     finally:
         if logger.problem_occurred:

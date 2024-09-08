@@ -40,6 +40,7 @@ disable = [
   "W0212", # protected-access
   "E1101", # no-member
   "C0209", # consider-using-f-string
+  "E0213", # no-self-use
 ]
 
 [build-system]
