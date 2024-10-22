@@ -26,7 +26,7 @@ def main():
     except Exception as exception:  # pylint: disable=broad-exception-caught
         logger.warning(exception)
     finally:
-        if logger.problem_occurred:
+        if logger.problem_occurred and settings.send_error_email:
             send_mail(
                 icloud_id=settings.icloud_id,
                 icloud_pass=settings.icloud_pass,

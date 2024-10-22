@@ -145,13 +145,17 @@ class Videos(BaseModel):
     @validator("*", pre=True)
     def print_pre(cls, value):
         logger.debug(
-            f"pre_validator of pydantic_model '%s' with content: %s", cls.__name__, value
+            "pre_validator of pydantic_model '%s' with content: %s",
+            cls.__name__,
+            value,
         )
         return value
 
     @validator("*", pre=False)
     def print_post(cls, value):
         logger.debug(
-            f"post_validator of pydantic_model '%s' with content: %s", cls.__name__, value
+            "post_validator of pydantic_model '%s' with content: %s",
+            cls.__name__,
+            value,
         )
         return value

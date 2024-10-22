@@ -116,6 +116,7 @@ class YApi:
         before_sleep=retry_write_log_message,
     )
     def perform_video_info(self, video_id: str) -> Videos:
+        logger.debug(f"Get Video from video_id {video_id}")
         request = self.youtube.videos().list(
             part=[
                 "contentDetails",
@@ -136,7 +137,9 @@ class YApi:
         )
         response = request.execute()
 
+        logger.debug(f"Got Raw Video from video_id {video_id}")
         videos = Videos.parse_obj(response)
+        logger.debug(f"Parsed Raw Video from video_id {video_id}")
         return videos
 
     def perform_request(self) -> None:

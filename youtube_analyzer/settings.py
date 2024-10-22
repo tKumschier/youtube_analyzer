@@ -6,6 +6,7 @@ from pydantic import BaseSettings
 class Settings(BaseSettings):
     # API Key for Google
     api_key: str
+    send_error_email: bool
 
     # Settings for Icloud
     icloud_id: str
