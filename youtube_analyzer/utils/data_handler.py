@@ -14,8 +14,9 @@ class DataHandler(BaseModel):
     data_subpath: Path
 
     def __init__(self, **data: Any) -> None:
-        folder_name: str = datetime.now().strftime("%Y.%m.%d_%H.00")
-        data_subpath: Path = settings.data_path / folder_name
+        current_date: str = datetime.now().strftime("%Y.%m.%d")
+        current_time: str = datetime.now().strftime("%H.00")
+        data_subpath: Path = settings.data_path / current_date / current_time
         data_subpath.mkdir(parents=True, exist_ok=True)
         super().__init__(data_subpath=data_subpath, **data)
 
